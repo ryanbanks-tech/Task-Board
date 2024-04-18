@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 // Task represents a Todoist task
@@ -12,6 +13,8 @@ type Task struct {
 	Content   string `json:"content"`
 	Completed bool   `json:"completed"`
 }
+
+var todoistBearerToken string = os.Getenv("TODOIST_BEARER_TOKEN")
 
 func main() {
 	// Construct the HTTP request
@@ -22,7 +25,7 @@ func main() {
 	}
 
 	// Set the authorization header
-	req.Header.Set("Authorization", "Bearer dc3231e98790bccb19cb5ec66021f868cdd5a433")
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", todoistBearerToken))
 
 	// Make the request
 	client := http.Client{}
